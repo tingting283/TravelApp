@@ -1,0 +1,16 @@
+ID: TravelApp
+_schema-version: '2.0'
+version: 0.0.1
+
+modules:
+ - name: TravelDB
+   type: hdb
+   path: TravelDB
+   requires:
+    - name: hdi_TravelDB
+
+resources:
+ - name: hdi_TravelDB
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
