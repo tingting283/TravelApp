@@ -16,6 +16,14 @@
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
+
+  <variable id="_weight" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
 </localVariables>
 <variableMappings/>
 <dataSources/>
@@ -32,7 +40,7 @@
     <restrictedViewAttributes/>
     <getShortestPathParameterization>
       <startVertexParameter>_airportCodeOrigin</startVertexParameter>
-      <inputWeightColumn></inputWeightColumn>
+      <inputWeightColumnParameter>_weight</inputWeightColumnParameter>
       <direction>outgoing</direction>
       <targetVertexParameter>_airportCodeDestination</targetVertexParameter>
     </getShortestPathParameterization>
