@@ -8,12 +8,13 @@ modules:
    path: TravelDB
    requires:
     - name: hdi_TravelDB
+
+resources:
+ - name: hdi_TravelDB
    parameters:
       config:
         database_id: 5b36afa6-c350-4334-9642-8b0c721ebd2e
         schema: TRAVELDB
-resources:
- - name: hdi_TravelDB
    properties:
       hdi-container-name: ${service-name}
    type: com.sap.xs.hdi-container
