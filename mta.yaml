@@ -1,20 +1,193 @@
-ID: TravelApp_09181346
-_schema-version: '2.0'
-version: 0.0.1
+'''
+Created on Sep 12, 2018
 
-modules:
- - name: TravelDB09181346
-   type: hdb
-   path: TravelDB
-   requires:
-    - name: hdi_TravelDB09181346
+@author: I068949
+'''
+from selenium import webdriver
+import time, datetime
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import platform
 
-resources:
- - name: hdi_TravelDB09181346
-   parameters:
-      config:
-        database_id: 09181346
-        schema: TRAVELDB
-   properties:
-      hdi-container-name: ${service-name}
-   type: com.sap.xs.hdi-container
+import  os
+
+cur_time = datetime.datetime.now().strftime("%m%d%H%M")
+
+cur_dir = os.getcwd()
+
+git_dir = "/home/I068949/web_ide_auto/TravelApp"
+os.chdir(git_dir)
+
+new_yaml = []
+with open("mta.yaml", "r") as f:
+    for line in f:
+        database_id: 09181348
+        database_id: 09181348
+ID: TravelApp_09181348
+ID: TravelApp_09181348
+ - name: TravelDB_09181348
+ - name: TravelDB_09181348
+    - name: hdi_TravelDB_09181348
+    - name: hdi_TravelDB_09181348
+ - name: hdi_TravelDB_09181348
+ - name: hdi_TravelDB_09181348
+        new_yaml.append(line)
+
+with open("mta.yaml", "w") as f:
+    f.writelines(new_yaml)
+
+#git remote add origin https://github.com/xuekai169/TravelApp.git; 
+cmd = """git add mta.yaml; 
+         git commit -m "first commit";  
+         git config credential.helper store;
+         git push -u origin master
+      """
+os.system(cmd)
+
+os.chdir(cur_dir)
+
+if platform.system() == 'Linux':
+    chromeOptions = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(chrome_options=chromeOptions)
+    driver.set_window_size(1366,768)
+elif platform.system() == 'Windows':
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+
+
+page_url = "https://10.56.179.178:39030/"
+driver.implicitly_wait(30)
+
+driver.get(page_url)
+currentWindow = driver.current_window_handle
+
+driver.find_element_by_link_text("webide").click()
+
+driver.switch_to_window(driver.window_handles[-1])
+
+driver.find_element_by_xpath("//input[@name='username']").click()
+driver.find_element_by_xpath("//input[@name='username']").clear()
+driver.find_element_by_xpath("//input[@name='username']").send_keys("XSA_DEV")
+
+driver.find_element_by_xpath("//input[@name='password']").click()
+driver.find_element_by_xpath("//input[@name='password']").clear()
+driver.find_element_by_xpath("//input[@name='password']").send_keys("Sybase123")
+
+driver.find_element_by_xpath("//input[@value='Log On']").click()
+
+time.sleep(15)
+
+print driver.title
+
+workspace=driver.find_element_by_xpath("//*[@title='Workspace']")
+ActionChains(driver).context_click(workspace).perform()
+driver.find_element_by_xpath('//*[text()="Git "]').click()
+driver.find_element_by_xpath('//*[text()="Clone Repository"]').click()
+driver.find_element_by_id("clone_uri_text_fld").send_keys("https://github.com/xuekai169/TravelApp.git")
+driver.find_element_by_id("clone_ok_button").click()
+time.sleep(30)
+
+if "(git) Project TravelApp: Status request completed successfully" in driver.page_source:
+    print "Git clone OK!"
+else:
+    print "Git clone failed!"
+##set project space 
+TravelApp = driver.find_element_by_xpath("//*[@title='TravelApp']")
+ActionChains(driver).context_click(TravelApp).perform()
+driver.find_element_by_xpath('//*[text()="Project Settings"]').click()
+driver.find_element_by_xpath('//*[text()="Space"]').click()
+driver.find_element_by_id("projectSpaceFragment--projectSpaceDropDown-input").click()
+driver.find_element_by_xpath("//*[@title='development']").click()
+
+driver.find_element_by_xpath('//*[@title="Save"  and @class="sapMBtn sapMBtnBase"]').click()
+driver.find_element_by_xpath('//*[@title="Close" and @class="sapMBtn sapMBtnBase"]').click()
+
+time.sleep(10)
+if "Workspace settings set successfully" in driver.page_source:
+    print "Set project space OK!"
+else:
+    print "Set project space failed!"
+
+
+TravelApp = driver.find_element_by_xpath("//*[@title='TravelApp']")
+ActionChains(driver).context_click(TravelApp).perform()
+driver.find_element_by_xpath('//*[text()="Build"]').click()
+time.sleep(15)
+
+if "Build of /TravelApp completed successfully" in driver.page_source:
+    print "Build OK!"
+else:
+    print "Build failed!"
+
+workspace=driver.find_element_by_xpath("//*[@title='Workspace']")
+ActionChains(driver).context_click(workspace).perform()
+driver.find_element_by_xpath('//*[text()="Refresh Workspace Items"]').click()
+time.sleep(5)
+
+mta_archives = driver.find_element_by_xpath("//*[@title='mta_archives']")
+ActionChains(driver).double_click(mta_archives).perform()
+
+TravelApp = driver.find_element_by_xpath('//*[starts-with(@title, "TravelApp")]')
+ActionChains(driver).double_click(TravelApp).perform()
+
+matr = driver.find_element_by_xpath('//*[starts-with(@title, "TravelApp") and contains(@title, "mtar")]')
+ActionChains(driver).context_click(matr).perform()
+driver.find_element_by_xpath('//*[text()="Deploy"]').click()
+time.sleep(3)
+driver.find_element_by_xpath('//*[text()="Deploy to Cloud Foundry"]').click()
+time.sleep(3)
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').click()
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').clear()
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').send_keys("https://api.cf.sap.hana.ondemand.com")
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').send_keys(Keys.ENTER)
+time.sleep(30)
+
+driver.find_element_by_xpath('//*[text()="Cancel"]').click()
+import pdb;pdb.set_trace()
+
+matr = driver.find_element_by_xpath('//*[starts-with(@title, "TravelApp") and contains(@title, "mtar")]')
+ActionChains(driver).context_click(matr).perform()
+driver.find_element_by_xpath('//*[text()="Deploy"]').click()
+time.sleep(3)
+driver.find_element_by_xpath('//*[text()="Deploy to Cloud Foundry"]').click()
+time.sleep(3)
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').click()
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').clear()
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').send_keys("https://api.cf.sap.hana.ondemand.com")
+driver.find_element_by_xpath('//*[contains(@id, "cf_endpoint-inner")]').send_keys(Keys.ENTER)
+time.sleep(30)
+
+"""
+driver.find_element_by_id("__input0-inner").send_keys("i068949")
+driver.find_element_by_id("__input1-inner").send_keys("noI1hemac")
+driver.find_element_by_xpath('//*[text()="Log On"]').click()
+time.sleep(30)
+"""
+
+driver.find_element_by_xpath('//*[contains(@id, "cf_organization-label")]').click()
+driver.find_element_by_xpath('//*[text()="hana-service-test"]').click()
+
+driver.find_element_by_xpath('//*[contains(@id, "cf_space-label")]').click()
+#driver.find_element_by_xpath('//*[text()="dbaas-aws-staging-us-east-1"]').click()
+driver.find_element_by_xpath('//*[contains(@id, "cf_space-1")]').click()
+
+driver.find_element_by_xpath('//*[text()="Deploy"]').click()
+
+time.sleep(60)
+if "Response state is FAILED" in driver.page_source:
+    print "Deploy to Cloud Foundry OK!"
+else:
+    print "Deploy to Cloud Foundry failed!"
+
+mta_archives = driver.find_element_by_xpath("//*[@title='mta_archives']")
+ActionChains(driver).context_click(mta_archives).perform()
+driver.find_element_by_xpath('//*[text()="Delete"]').click()
+driver.find_element_by_id("MSG_CONFIRM--btn-OK").click()
+
+
+TravelApp = driver.find_element_by_xpath("//*[@title='TravelApp']")
+ActionChains(driver).context_click(TravelApp).perform()
+driver.find_element_by_xpath('//*[text()="Delete"]').click()
+driver.find_element_by_id("MSG_CONFIRM--btn-OK").click()
+
+
