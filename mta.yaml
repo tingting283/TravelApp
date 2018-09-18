@@ -13,7 +13,7 @@ resources:
  - name: hdi_TravelDB
    parameters:
       config:
-        database_id: 09141558
+        database_id: 09181248
         schema: TRAVELDB
    properties:
       hdi-container-name: ${service-name}
