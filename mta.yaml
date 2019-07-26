@@ -1,19 +1,19 @@
-ID: TravelApp_07161106
+ID: TravelApp_07261330
 _schema-version: '2.0'
 version: 0.0.1
 
 modules:
- - name: TravelDB_07161106
+ - name: TravelDB_07261330
    type: hdb
    path: TravelDB
    requires:
-    - name: hdi_TravelDB_07161106
+    - name: hdi_TravelDB_07261330
 
 resources:
- - name: hdi_TravelDB_07161106
+ - name: hdi_TravelDB_07261330
    parameters:
       config:
-        database_id: 08cdaeeb-6952-4136-9579-c519a44c8072
+        database_id: 4a1ab054-ddba-4175-9701-4549487a0631
         schema: TRAVELDB
    properties:
       hdi-container-name: ${service-name}
