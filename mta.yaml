@@ -1,16 +1,16 @@
-ID: TravelApp_06180640
+ID: TravelApp_06180642
 _schema-version: '2.0'
 version: 0.0.1
 
 modules:
- - name: TravelDB_06180640
+ - name: TravelDB_06180642
    type: hdb
    path: TravelDB
    requires:
-    - name: hdi_TravelDB_06180640
+    - name: hdi_TravelDB_06180642
 
 resources:
- - name: hdi_TravelDB_06180640
+ - name: hdi_TravelDB_06180642
    parameters:
       config:
         database_id: 5c92f776-93aa-4e4e-a8bf-2b701027aebd
